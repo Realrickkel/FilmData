@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react'
 import { Context } from '../context/Context'
-import run from "../config/gemini";
+import run from "../Config/gemini";
 
 export default function Main(props) {
     const {movies, setMovies} = props
