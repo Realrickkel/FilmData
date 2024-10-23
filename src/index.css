@@ -1,0 +1,323 @@
+:root {
+    font-family: 'Inter', system-ui, 'Avenir', Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+    font-weight: 400;
+  
+    color: white;
+    background-color: #030615;
+  
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+*
+{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Inter';
+}
+
+.row
+{
+    display: flex;
+    position: relative;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+}
+
+.container-fluid
+{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    position: relative;
+    gap: 1.4rem;
+    width: 100%;
+    justify-content: center;
+    transform-style: preserve-3d;
+    transform: perspective(1000px);
+    margin-top: 2rem;
+}
+
+.container-fluid .movie-poster
+{
+    transition: 0.5s;
+    filter: brightness(1);
+}
+
+.container-fluid .movie-poster:hover
+{
+    filter: brightness(1);
+    transform: translateZ(50px);
+    box-shadow: 5px 5px 20px #000000;
+}
+
+.container-fluid .movie-poster#active
+{
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    filter: brightness(1);
+    transform: translateZ(50px);
+    box-shadow: 5px 5px 20px #000000;
+    overflow: hidden;
+}
+
+.container-fluid .movie-poster#active::before {
+    content: "";
+    display: block;
+    background: linear-gradient(
+      90deg,
+      #00F9A7 0%,
+      #00AAFA 100%
+    );
+    height: 700px;
+    width: 700px;
+    position: absolute;
+    animation: rotate 2s linear infinite;
+    z-index: -1;
+  }
+
+  @keyframes rotate {
+    from {
+      transform: rotate(0);
+    }
+  
+    to {
+      transform: rotate(360deg);
+    }
+  }  
+
+.container-fluid .movie-poster:hover + *
+{
+    filter: brightness(0.8);
+    transform: translateZ(25px) rotateY(6deg);
+}
+
+.container-fluid .movie-poster:hover + * + *
+{
+    filter: brightness(0.6);
+    transform: translateZ(5px) rotateY(1deg);
+}
+
+.container-fluid .movie-poster:hover + * + * + *
+{
+    filter: brightness(0.4);
+    transform: translateZ(5px) rotateY(1deg);
+}
+
+.container-fluid .movie-poster:hover + * + * + * + *
+{
+    filter: brightness(0.4);
+}
+
+.container-fluid .movie-poster:has(+*:hover)
+{
+    filter: brightness(0.8);
+    transform: translateZ(25px) rotateY(-6deg);
+}
+
+.container-fluid .movie-poster:has(+*+*:hover)
+{
+    filter: brightness(0.6);
+    transform: translateZ(5px) rotateY(-1deg);
+}
+
+.container-fluid .movie-poster:has(+*+*+*:hover)
+{
+    filter: brightness(0.4);
+}
+
+.container-fluid .movie-poster:has(+*+*+*+*:hover)
+{
+    filter: brightness(0.4);
+}
+
+.movie-poster
+{
+    display: flex;
+    position: relative;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 1rem;
+}
+
+.movie-poster img
+{
+    height: 100%;
+    overflow-x: hidden;
+    border-radius: 1.1rem;
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    padding: 3px;
+}
+
+#lijn-component
+{
+    display: flex;
+    position: relative;
+    margin: auto;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+    width: 80%;
+    gap:0;
+}
+
+.active::before, .active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    height: 4px;
+    border-radius: 99px;
+    animation: grow 1s cubic-bezier(0.7, 0.1, 0.1, 0.7);
+  }
+
+  .active::before {
+    left: 0;
+    width: 48%;
+    transform-origin: 100%;
+    background: linear-gradient(90deg,#00F9A7,#00AAFA);
+  }
+  .active::after {
+    right: 0;
+    width: 48%;
+    transform-origin: 0%;
+    background: linear-gradient(270deg,#00F9A7,#00AAFA);
+  }
+
+  @keyframes grow {
+    from {
+      transform: scaleX(0);
+    }
+  
+    to {
+      transform: scaleX(1);
+    }
+  } 
+/*
+  #driehoek {
+    --b: 10px;
+  
+    width: 4rem;
+    aspect-ratio: 1/cos(5deg);
+    clip-path: polygon(50% 0,100% 100%,0 100%,50% 0,50% var(--b),calc(var(--b)*cos(30deg)) calc(100% - var(--b)/2),calc(100% - var(--b)*cos(30deg)) calc(100% - var(--b)/2),50% var(--b));
+    background: linear-gradient(45deg,#FA6900,#C02942);
+  }*/
+
+
+/*
+#driehoek-rechts::before
+{
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 52%;
+    height: 4px;
+    background: red;
+    transform: rotate(240deg);
+    border-radius: 99px;
+}
+
+#driehoek-rechts::before
+{
+    bottom: 0.8rem;
+    width: 5%;
+}
+
+#driehoek-links::before
+{
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 52%;
+    height: 4px;
+    background: red;
+    transform: rotate(300deg);
+    border-radius: 99px;
+}
+
+#driehoek-links::before
+{
+    bottom: 0.8rem;
+    width: 5%;
+}
+*/
+.MovieInfo
+{
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    margin: auto;
+    width: 70%;
+}
+
+.col-small input
+{
+  accent-color: red;
+  background-color: #0c1540;
+  border: none;
+  color: white;
+  padding: 0.15rem;
+}
+
+#myBtn
+{
+  color: #030615;
+  border: none;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.1rem;
+  padding-bottom: 0.1rem;
+  background: #00F9A7;
+  transition: 0.2s;
+  border-top-right-radius: 2px;
+  border-bottom-right-radius: 2px;
+}
+
+#myBtn:hover
+{
+  color: white;
+  background-color:#00AAFA;
+  cursor: pointer;
+}
+
+.result-tekst
+{
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+.loader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+}
+
+.loader i
+{
+  opacity: 0.2;
+  font-size: 3rem;
+  animation: spin 1s linear infinite;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+@keyframes spin{
+  from {
+    transform: rotate(0deg);
+  }
+  to{
+    transform: rotate(360deg);
+  }
+}
