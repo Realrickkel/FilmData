@@ -26,7 +26,7 @@ function App() {
   const getMovieRequest = async (searchValue) => {
     // We gebruiken `` ipv '' omdat we hier een stukje code inplaatsen, dat stukje code is de search value
     const OMDBAPIkey = import.meta.env.VITE_OMDB_API_KEY;
-    const url = `http://www.omdbapi.com/?s=${searchValue}&apikey=${OMDBAPIkey}`
+    const url = `https://www.omdbapi.com/?s=${searchValue}&apikey=${OMDBAPIkey}`
     // We roepen de API aan om info te geven, dit word opgeslagen in een variabele "response"  
     const response = await fetch(url);
     // Vervolgens moet het leesbaar gemaakt worden om de gegevens te kunnen verwerken, daarvoor zetten we het om naar JSON
@@ -47,7 +47,7 @@ function App() {
     var randomSearchRes = randomMovie[randomSearchVal];
     // We gebruiken `` ipv '' omdat we hier een stukje code inplaatsen, dat stukje code is de search value
     const OMDBAPIkey = import.meta.env.VITE_OMDB_API_KEY;
-    const url = `http://www.omdbapi.com/?s=${randomSearchRes}&apikey=${OMDBAPIkey}`
+    const url = `https://www.omdbapi.com/?s=${randomSearchRes}&apikey=${OMDBAPIkey}`
     // We roepen de API aan om info te geven, dit word opgeslagen in een variabele "response"  
     const response = await fetch(url);
     // Vervolgens moet het leesbaar gemaakt worden om de gegevens te kunnen verwerken, daarvoor zetten we het om naar JSON

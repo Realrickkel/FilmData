@@ -45,7 +45,7 @@ export default function Main(props) {
     const getMovieInfoRequest = async () =>{
         //Pakt de juiste url voor de aangeklikte film
         const OMDBAPIkey = import.meta.env.VITE_OMDB_API_KEY;
-        const urlInfo = `http://www.omdbapi.com/?i=${correctMovieID}&apikey=${OMDBAPIkey}`
+        const urlInfo = `https://www.omdbapi.com/?i=${correctMovieID}&apikey=${OMDBAPIkey}`
         console.log(urlInfo);
         //ontvangt de informatie van de API
         const responseInfo = await fetch(urlInfo);
