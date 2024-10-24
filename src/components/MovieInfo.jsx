@@ -5,26 +5,33 @@ export default function MovieInfo(props) {
     const {movieInfo, setMovieInfo, showResult, setShowResult, resultData, setResultData, loading, setLoading} = useContext(Context)
 
     var reviewText
-    
-    var displaytekst = "Ffkes kijken"
+    const [displayText,setDisplayText] = useState('Ffkes kijken')
     var Rating = Number(movieInfo.imdbRating)
     
-    if (Rating >= 8 && Rating < 10){
-      displaytekst = "Goei spul!"
-    }
-    else if(Rating >= 7 && Rating < 8)
-      {
-      displaytekst = "Da is een mooi filmpke"
+    const RatingSystem = () =>{
+
+      if (Rating >= 8 && Rating < 10){
+        setDisplayText('Goei spul!')
       }
-    else if  (Rating >= 5 && Rating < 7){
-      displaytekst = "Mwua"
-    }
-    else if (Rating >= 1 && Rating < 5){
-      displaytekst = "des niks"
-    }
-    else{
-      displaytekst = "ffkes kijken"
-    }
+      else if(Rating >= 7 && Rating < 8)
+        {
+          setDisplayText('Da is een mooi filmpke')
+        }
+        else if  (Rating >= 5 && Rating < 7){
+          setDisplayText('Mwua')
+        }
+        else if (Rating >= 1 && Rating < 5){
+          setDisplayText('des niks')
+        }
+        else{
+          setDisplayText('ffkes kijken')
+        }
+      }
+
+      //als MovieInfo veranderd, run ratingsystem useEffect gebruikt de geupdate values
+      useEffect(()=>{
+        RatingSystem()
+      },[movieInfo])
 
 
   return (
@@ -32,12 +39,12 @@ export default function MovieInfo(props) {
 
     <div className='MovieInfo'>
       <h1>
-        {displaytekst}
+        {displayText}
       </h1>
       <>
           {!showResult
           ?<>
-          <p>geen tekst</p>
+          <p>Klik op een film of zoek een andere op om mijn review te ontvangen!</p>
           </>:<div className='result'>
                 <div className='result-title'>
                   {loading

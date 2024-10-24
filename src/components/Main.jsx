@@ -1,13 +1,13 @@
-import React, { useContext, useState, useEffect } from 'react'
+import React, { useContext, useState, useEffect, useRef } from 'react'
 import { Context } from '../context/Context'
 import run from "../Config/gemini";
 
 export default function Main(props) {
     const {movies, setMovies} = props
     const {movieInfo, setMovieInfo, showResult, setShowResult, resultData, setResultData, loading, setLoading,} = useContext(Context)
-    var correctMovieID
-    var checkJSON
-    var reviewText
+    const [correctMovieID, setCorrectMovieID] = useState('')
+    const hasPageBeenRendered = useRef({effect1: false, effect2: false})
+    //var correctMovieID
 
     //imdbID moet gevonden worden en dan in de URL info geplant worden
     const getMovieLink = () =>
@@ -22,7 +22,8 @@ export default function Main(props) {
             var i
             for(i = 0; i < FilmSearch.length; i++){
                 if (FilmSearch[i] == movieClickedSRC){
-                    correctMovieID = movies[i].imdbID
+                    //correctMovieID = movies[i].imdbID
+                    setCorrectMovieID(movies[i].imdbID)
                 }
             }
             const moviePosterClass = document.getElementsByClassName('movie-poster');
@@ -35,33 +36,39 @@ export default function Main(props) {
             MovieClickedID.id = "active"
             const LineClicked = document.getElementById('lijn-component')
             LineClicked.classList.add('active')
-            //begin de functie die de juiste informatie ontfutseld voor de review
-            getMovieInfoRequest()
         }
-
-        
 
     // functie die alle informatie ontfutseld die op de pagina gedisplayt moet worden
     const getMovieInfoRequest = async () =>{
         //Pakt de juiste url voor de aangeklikte film
         const OMDBAPIkey = import.meta.env.VITE_OMDB_API_KEY;
         const urlInfo = `https://www.omdbapi.com/?i=${correctMovieID}&apikey=${OMDBAPIkey}`
-        console.log(urlInfo);
         //ontvangt de informatie van de API
         const responseInfo = await fetch(urlInfo);
         //zet de ontvangen informatie om naar JSON informatie
         const responseJSONInfo = await responseInfo.json()
-        console.log(responseJSONInfo)
-        checkJSON = (responseJSONInfo)
         //Geeft de variabele movieInfo de juiste informatie om een of andere reden geeft console.log movieinfo de oude informatie, idee bedenken om deze te legen en weer te vullen
         setMovieInfo(responseJSONInfo)
-        onSent()
       }
+
+      useEffect(()=>{
+        if(hasPageBeenRendered.current["effect1"]){
+          getMovieInfoRequest();
+        }
+        hasPageBeenRendered.current["effect1"] = true;
+      }, [correctMovieID])
+
+      useEffect(()=>{
+        if(hasPageBeenRendered.current["effect2"]){
+        onSent();
+        }
+        hasPageBeenRendered.current["effect2"] = true;
+      }, [movieInfo])
 
       const onSent = async () =>
       {
-        console.log(checkJSON.Plot)
-        var Rating = Number(checkJSON.imdbRating)
+        var Rating = Number(movieInfo.imdbRating)
+        var reviewText
         if (Rating >= 8 && Rating < 10){
             reviewText = " fantastisch vindt."
           }
@@ -79,8 +86,7 @@ export default function Main(props) {
             reviewText = "ffkes kijken"
           }
         //waarom kan ik hier niet movieInfo.Plot gebruiken????
-        var SendString = "Zet deze tekst om naar het nederlands " + checkJSON.Plot + " en maak er dan iets grappigs van. Flauwe humor toevoegen alsof het gerecenseerd is door iemand die zichzelf vooral heel grappig vindt. Daarnaast moet je 1 à 2 keer het woord bizar er in kwijt. De tekst mag hier en daar wat brabantse woorden bevatten. Voeg een mening toe in dezelfde stijl die de film" + reviewText + " Geef alleen de tekst waar ik om vraag"
-        console.log(SendString)
+        var SendString = "Zet deze tekst om naar het nederlands " + movieInfo.Plot + " en maak er dan iets grappigs van. Flauwe humor toevoegen alsof het gerecenseerd is door iemand die zichzelf vooral heel grappig vindt. Daarnaast moet je 1 à 2 keer het woord bizar er in kwijt. De tekst mag hier en daar wat brabantse woorden bevatten. Voeg een mening toe in dezelfde stijl die de film" + reviewText + " Geef alleen de tekst waar ik om vraag"
         setResultData('')
         setLoading(true)
         setShowResult(true)
@@ -95,8 +101,8 @@ export default function Main(props) {
     return (
     <>
         <div className='container-fluid'>
-            {movies.map((movie)=>
-            <div className='movie-poster' onClick={function() {getMovieLink();}}>
+            {movies.map((movie, index)=>
+            <div key={index} className='movie-poster' onClick={function() {getMovieLink();}}>
                 <img src={movie.Poster} alt= 'bg-image'></img>
             </div>
             )}

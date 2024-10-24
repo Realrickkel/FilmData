@@ -11,15 +11,6 @@ function App() {
   movies.length = Math.min(movies.length, 5)
   // dynamische zoekfunctie
   const [searchValue, setSearchValue] = useState('')
-  const randomMovie = 
-  [
-    "new",
-    "avengers",
-    "harry potter",
-    "pokemon",
-    "west",
-    "indiana jones"
-  ]
 
   //We roepen hier de api aan om resultaten te genereren voor op de website
   // await functie werkt alleen met async, dat kan je gewoon voor de () typen voor de arrowfunctie
@@ -43,6 +34,15 @@ function App() {
 
   const setMoviesInitial = async (random) => {
     //Randomizer
+    const randomMovie = 
+  [
+    "new",
+    "avengers",
+    "harry potter",
+    "pokemon",
+    "west",
+    "indiana jones"
+  ]
     var randomSearchVal = Math.floor(Math.random() * randomMovie.length);
     var randomSearchRes = randomMovie[randomSearchVal];
     // We gebruiken `` ipv '' omdat we hier een stukje code inplaatsen, dat stukje code is de search value

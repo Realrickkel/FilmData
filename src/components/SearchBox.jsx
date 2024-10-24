@@ -22,7 +22,6 @@ export default function SearchBox(props) {
       document.getElementById("lijn-component").className = ""
       var inputFieldValue = document.getElementById("searchBoxField")
       var btnClicked = inputFieldValue.value
-      console.log(btnClicked)
       props.setSearchValue(btnClicked)
     }
 
@@ -37,8 +36,8 @@ export default function SearchBox(props) {
     <div className='col-small'>
         <input className='form-control'
         value={props.value} 
-        placeholder='Type to search' id="searchBoxField" onKeyPress={handleKeyPress}></input>
-        <button id="myBtn" onClick={searchStart} >Button</button>
+        placeholder='Zoek...' id="searchBoxField" onKeyPress={handleKeyPress}></input>
+        <button id="myBtn" onClick={searchStart} >Zoek!</button>
     </div>
   )
 }
